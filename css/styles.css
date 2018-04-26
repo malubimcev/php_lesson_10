@@ -1,0 +1,21 @@
+body {
+    max-width: 1000px;
+    height: auto;
+    margin: 10px auto;
+    padding-top: 20px;
+    box-sizing: border-box;
+    background-color: #dddddd;
+    color: #111155;
+}
+
+h1 {
+    margin: 5px auto;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+h2 {
+    margin: 5px auto;
+    font-size: 18px;
+    text-decoration: underline;
+}
