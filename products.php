@@ -10,7 +10,6 @@
         public function setPrice($price);
         public function getPrice();
         public function setDiscount($discount);
-        public function setDeliveryPrice($deliveryPrice);
         public function getDeliveryPrice();
     }
 
@@ -27,6 +26,7 @@
         }
     }
 
+    //базовый класс продукта
     class NewProduct implements NewSpecifications, NewPrice
     {
         use PriceCalculation;
@@ -35,7 +35,8 @@
         private $productName = 'unknown';
         private $price = 0;
         private $discount = 0;
-        private $deliveryPrice = 0;
+        private $deliveryPrice = 250;
+        private $weight = 0;
 
         public function setProductName($productName)
         {
@@ -56,43 +57,12 @@
         {
             if (($discount > 0) && ($discount < 100)) {
                 $this->discount = $discount;
+                $this->deliveryPrice = 300;
+            } else {
+                $this->discount = 0;
+                $this->deliveryPrice = 250;
             }
         }
-
-        public function setDeliveryPrice($deliveryPrice)
-        {
-            $this->deliveryPrice = $deliveryPrice;
-        }
-
-        public function getPrice()
-        {
-            $newPrice = getDiscountedPrice($this->price, $this->discount);
-            return $newPrice;
-        }
-
-        public function getDeliveryPrice()
-        {
-            return $this->deliveryPrice;
-        }
-
-        public function printInfo()
-        {
-            $info = $this->getProductName()."\t". $this->getPrice()."\t".$this->getDeliveryPrice();
-            echo $info;
-        }
-
-        public function __construct($productName, $price, $discount, $deliveryPrice) {
-            $this->setProductName($productName);
-            $this->setPrice($price);
-            $this->setDiscount($discount);
-            $this->setDeliveryPrice($deliveryPrice);
-        }
-    }
-//end clacc Product
-
-    final class Food extends NewProduct
-    {
-        private $weight = 0;
 
         public function setWeight($weight)
         {
@@ -104,18 +74,79 @@
             }
         }
 
+        public function getPrice()
+        {
+            return $this->getDiscountedPrice($this->price, $this->discount);
+        }
+
+        public function getDeliveryPrice()
+        {
+            return $this->deliveryPrice;
+        }
+
+        public function printInfo()
+        {
+            $info = "Продукт: ".$this->getProductName().";\t Цена: ". $this->getPrice().";\t Доставка: ".$this->getDeliveryPrice().";\t Вес: ".$this->weight;
+            echo $info;
+        }
+
+        public function __construct($productName, $price, $discount, $weight) {
+            $this->setProductName($productName);
+            $this->setPrice($price);
+            $this->setDiscount($discount);
+            $this->setWeight($weight);
+        }
+    }//end clacc Product
+
+    //класс - наследник NewProduct
+    final class Food extends NewProduct
+    {
+
         public function printInfo()
         {
             parent::printInfo();
-            echo $this->weight;
         }
 
-        public function __construct($productName, $price, $discount, $deliveryPrice, $weight)
+        public function __construct($productName, $price, $discount, $weight)
         {
-            parent::__construct($productName, $price, $discount, $deliveryPrice);
-            $this->setWeight($weight);
+            parent::__construct($productName, $price, $discount, $weight);
+            if ($weight <= 10) {
+                $this->setDiscount(0);
+            }
+
         }
-    }
+
+    }//end clacc Food
+
+    //класс - наследник NewProduct
+    final class Mebel extends NewProduct
+    {
+        public function printInfo()
+        {
+            parent::printInfo();
+        }
+
+        public function __construct($productName, $price, $discount, $weight)
+        {
+            parent::__construct($productName, $price, $discount, $weight);
+        }
+
+    }//end clacc Mebel
+
+    //класс - наследник NewProduct
+    final class Bike extends NewProduct
+    {
+        public function printInfo()
+        {
+            parent::printInfo();
+        }
+
+        public function __construct($productName, $price, $discount, $weight)
+        {
+            parent::__construct($productName, $price, $discount, $weight);
+        }
+
+    }//end clacc Bike
 
     class NewProductList
     {
@@ -143,6 +174,7 @@
         {
             foreach ($this->items as $key => $item) {
                 $item->printInfo();
+                echo "<br>";
             }
         }
 

@@ -12,13 +12,20 @@
     $productList->add($pen);
     $productList->add($tv);
 
-    $food1 = new Food('Food_1',1000,5,250,1);
-    $food2 = new Food('Food_2',2000,10,250,12);
-    $food3 = new Food('Food_3',5000,5,250,5);
+    $product1 = new Food('пицца', 600, 10, 1);
+    $product2 = new Bike('велосипед_1', 14000, 10, 15);
+    $product3 = new Mebel('кровать', 25000, 0, 50);
+    $product4 = new Food('торт', 1500, 10, 2);
+    $product5 = new Bike('велосипед_2', 25000, 10, 13);
+    $product6 = new Mebel('шкаф', 20000, 0, 40);
     $foodList = new NewProductList();
-    $foodList->add($food1);
-    $foodList->add($food2);
-    $foodList->add($food3);
+    $foodList->add($product1);
+    $foodList->add($product2);
+    $foodList->add($product3);
+    $foodList->add($product4);
+    $foodList->add($product5);
+    $foodList->add($product6);
+
 ?>
 <html>
     <head>
@@ -35,7 +42,7 @@
         ?>
         <h2>Дополнительное задание</h2>
         <?php
-            echo $foodList->printList().'</div>';
+            echo $foodList->printList();
         ?>
     </body>
 </html>
