@@ -3,7 +3,7 @@
     require_once 'classes.php';
     require_once 'products.php';
 
-    $car = new Car('BMW', 'M5', 'black', 60000, 5);
+    $car = new Car('BMW', 'M5', 'black', 60000, 5, 120);
     $pen = new Pen('FamousPenBrand', 'LegendModel', 500, 5, 'black', '_t', '_m');
     $tv = new TVset('Philips', 'NewTV', 30000, 3, 'LCD', 42);
     $duck = new Duck('Утка');
@@ -39,6 +39,9 @@
         <?php
             echo $productList->printList();
             echo $duck->printInfo();
+            $pen->write('The Word');
+            $tv->turnOn();
+            $tv->turnOff();
         ?>
         <h2>Дополнительное задание</h2>
         <?php

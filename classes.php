@@ -84,14 +84,21 @@
             $this->setDiscount($discount);
         }
     }
-
 //end clacc Product
 
-    final class Car extends Product implements Color
+//============
+    interface Driving
+    {
+        public function setSpeed($speed);
+        public function getSpeed();
+    }
+
+    final class Car extends Product implements Color, Driving
     {
         const MAXPRICE = 10000000;
         private $colors = ['white', 'black', 'red', 'gray', 'silver', 'blue'];
         private $color = 'white';
+        private $speed = 0;
 
         public function setColor($color)
         {
@@ -105,24 +112,40 @@
             return $this->color;
         }
 
+        public function setSpeed($speed) {
+            if (($speed > 0) && ($speed <=300)) {
+                $this->speed = (int)$speed;
+            }
+        }
+
+        public function getSpeed()
+        {
+            return $this->speed;
+        }
+
         //переопределяем метод printInfo
         public function printInfo()
         {
-            $info = "Car: ".$this->getBrandName()."\t".$this->getProductName()."\t".$this->getColor()."\t".$this->getPrice()."<br>";
+            $info = "Car: ".$this->getBrandName()."; ".$this->getProductName()."; Color: ".$this->getColor()."; Price: ".$this->getPrice()."; Speed: ".$this->getSpeed()."<br>";
             echo $info;
         }
 
-        public function __construct ($brandName, $modelName, $color, $price, $discount)
+        public function __construct ($brandName, $modelName, $color, $price, $discount, $speed)
         {
             parent::__construct($brandName, $modelName, $price, $discount);
             $this->setColor($color);
+            $this->setSpeed($speed);
         }
 
     } //end class Car
 
 //================
+    interface Writing
+    {
+        public function write($word);
+    }
 
-    final class Pen extends Product implements Color
+    final class Pen extends Product implements Color, Writing
     {
         private $type = 'automatic';
         private $material = 'plastic';
@@ -163,6 +186,11 @@
             return $this->material;
         }
 
+        public function write($word)
+        {
+            echo "<p>Pen writing: <b><i>$word</i></b></p>";
+        }
+
         public function printInfo()
         {
             $info = "Pen: ".parent::printInfo()."\t".$this->getColor()."\t".$this->getType()."\t".$this->getMaterial()."<br>";
@@ -180,6 +208,11 @@
     }//end class Pen
 
 //================
+    interface ModeSetting
+    {
+        public function turnOn();
+        public function turnOff();
+    }
 
     final class TVset extends Product
     {
@@ -210,6 +243,16 @@
       public function getDiag()
       {
           return $this->diagSize;
+      }
+
+      public function turnOn()
+      {
+          echo "<p>TV is On</p>";
+      }
+
+      public function turnOff()
+      {
+          echo "<p>TV is Off</p>";
       }
 
       public function printInfo()
